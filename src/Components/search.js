@@ -67,7 +67,7 @@ class Search extends React.Component {
           onSubmit={this.handleSearch}
         >
           <InputLabel htmlFor="name-simple" />
-          <Input id="name-simple" onChange={this.props.setSearchTerm} />
+          <Input id="name-simple" className="name-simple" onChange={this.props.setSearchTerm} />
           <Button
             type="submit"
             variant="extendedFab"

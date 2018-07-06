@@ -71,7 +71,18 @@ class FullWidthGrid extends React.Component {
           setSearchTerm={this.setSearchTerm}
           setSearchResults={this.setSearchResults}
         />
-        <h1>Periods</h1>
+        <Search
+          searchTerm={this.state.searchTerm}
+          setSearchTerm={this.setSearchTerm}
+          setSearchResults={this.setSearchResults}
+        />
+
+        <h1 style={{display: "inline-block"}}>Periods</h1>
+          <Search
+          searchTerm={this.state.searchTerm}
+          setSearchTerm={this.setSearchTerm}
+          setSearchResults={this.setSearchResults}
+        />
         <Grid container spacing={24}>
           {this.createGeneCards().map(gene => {
             return (
