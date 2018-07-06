@@ -9,6 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 // import SimpleModal from '@material-ui/core/SimpleModal';
 import Modal from './modal'
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import classnames from 'classnames';
 
 const styles = {
   card: {
@@ -65,6 +69,10 @@ class SimpleCard extends React.Component {
     this.props.artworkModal(id);
   };
 
+  favoriteClick = (id) =>{
+    // add card to favorites
+  }
+
   render() {
     const { classes } = this.props;
     const bull = <span className={classes.bullet}>•</span>;
@@ -101,6 +109,11 @@ class SimpleCard extends React.Component {
           </CardContent>
           </div>
         </Modal>
+        <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton aria-label="Add to favorites" style={{ margin:"0 0 0 100px "}}>
+              <FavoriteIcon onClick={this.favoriteClick} />
+            </IconButton>
+          </CardActions>
           </CardActions>
       </div>
     );

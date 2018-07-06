@@ -18,10 +18,39 @@ const styles = theme => ({
   }
 });
 
+const URL = "https://api.artsy.net/api/"
+const Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUzMTMyNDQ4MywiaWF0IjoxNTMwNzE5NjgzLCJhdWQiOiI1YjNjZWRjMmNkNTMwZTA4NTlhMzQ0NWEiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWIzY2VkYzM4YjNiODEzNTQ0MmNkMDExIn0.CSvl6_A9XdChPrMIylGmCnb-iwb5-E1shyyBbC3QGJQ"
+
 class Search extends React.Component {
   state = {
-    name: ""
+    name: "",
+    searchResults: []
   };
+
+  componentDidMount(){
+    this.fetchSearch()
+  }
+  
+  fetchSearch() {
+        fetch(
+            `${URL}artists?size=5&term=${encodeURIComponent(
+                this.props.searchTerm
+            )}&page=1`,
+            {
+                headers: {
+                    "X-Xapp-Token": Token
+                }
+            }
+        )
+            .then(resp => {
+                return resp.json();
+            })
+            .then(json => {
+                this.setState({
+                    searchResults: json
+                });
+            });
+    };
 
   handleChange = event => {
     this.setState({ name: event.target.value });

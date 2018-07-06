@@ -5,13 +5,17 @@ import './App.css';
 import Layout from './Components/layout';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state ={
+      searchTerm: "edgar-degas"
+    }
+  }
   render() {
-    const name="Degas"
-    const period="Impressionism"
-
+   
     return (
       <div className="App">
-        <Layout name={name} period={period} />
+        <Layout searchTerm={this.state.searchTerm} />
       </div>
     );
   }

@@ -60,7 +60,7 @@ function FullWidthGrid(props) {
     <div className={classes.root}>
       <NavBar />
       <PaperSheet />
-      <Search />
+      <Search searchTerm={this.props.searchTerm} />
       <h1>Periods</h1>
       <Grid container spacing={24}>
         {createGeneCards().map(gene => {
@@ -71,7 +71,7 @@ function FullWidthGrid(props) {
                   name={impressionism.name}
                   bgImage={impressionism._links.thumbnail.href}
                   description={impressionism.description.slice(0, 70) + "..."}
-                  artworkModal={this.modal}
+                  // artworkModal={this.modal}
                   id={impressionism.id}
                 />
               </Paper>
