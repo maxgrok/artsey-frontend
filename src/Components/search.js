@@ -34,7 +34,9 @@ class Search extends React.Component {
         <FormControl className={classes.formControl} style={{margin: "0 auto" }}>
           <InputLabel htmlFor="name-simple"></InputLabel>
           <Input id="name-simple" value={this.state.name} onChange={this.handleChange} />
-          <FloatingActionButton type="submit"/>
+          <Button variant="extendedFab" color="primary" aria-label="delete" className={this.props.button}>
+            Search
+          </Button>
         </FormControl>
       </div>
     );
