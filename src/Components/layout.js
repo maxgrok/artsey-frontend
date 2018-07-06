@@ -25,7 +25,7 @@ function FullWidthGrid(props) {
     <Search />
       <Grid container spacing={24}>
         <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}><SimpleCard name={props.name} period={props.period}/></Paper>
+          <Paper className={classes.paper}><geneCard /></Paper>
         </Grid>
         <Grid item xs={6} sm={3}>
           <Paper className={classes.paper}><SimpleCard name={props.name} period={props.period}/></Paper>

@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import FloatingActionButton from './button';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   container: {
