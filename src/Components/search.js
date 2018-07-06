@@ -1,24 +1,12 @@
-<<<<<<< HEAD
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import FloatingActionButton from './button';
-import Button from '@material-ui/core/Button';
-=======
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
+// import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import FloatingActionButton from "./button";
+// import FloatingActionButton from "./button";
 import Button from "@material-ui/core/Button";
->>>>>>> 21236e904277ed249db7b815e5eb012c42e44a98
 
 const styles = theme => ({
   container: {
