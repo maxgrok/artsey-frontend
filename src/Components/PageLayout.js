@@ -123,7 +123,11 @@ class PageLayout extends React.Component {
                     <Paper className={classes.paper}>
                       <SimpleCard
                         name={gene.name}
-                        bgImage={gene._links.thumbnail.href}
+                        bgImage={
+                          gene._links.thumbnail
+                            ? gene._links.thumbnail.href
+                            : ""
+                        }
                         description={gene.description.slice(0, 70) + "..."}
                         // artworkModal={this.modal}
                         id={gene.id}
@@ -143,7 +147,11 @@ class PageLayout extends React.Component {
                     <Paper className={classes.paper}>
                       <SimpleCard
                         name={artist.name}
-                        bgImage={artist._links.thumbnail.href}
+                        bgImage={
+                          artist._links.thumbnail
+                            ? artist._links.thumbnail.href
+                            : ""
+                        }
                         description={artist.hometown}
                       />
                     </Paper>
