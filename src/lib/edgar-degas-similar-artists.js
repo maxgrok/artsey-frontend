@@ -1,4 +1,4 @@
-export const edgarDegasSimilarArtists = {
+ export const edgarDegasSimilarArtists = {
     _embedded: {
         artists: [
             {

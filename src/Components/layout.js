@@ -12,6 +12,8 @@ import { edgarDegasArtworks } from "../lib/edgar-degas-artworks";
 import NavBar from "./NavBar";
 import PaperSheet from "./paper";
 
+import CommentBox from './commentbox';
+
 const styles = theme => ({
   root: {
     flexGrow: 1

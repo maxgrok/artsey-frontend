@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import classnames from 'classnames';
+import Accordion from './accordion';
 
 const styles = {
   card: {
@@ -69,8 +70,10 @@ class SimpleCard extends React.Component {
     this.props.artworkModal(id);
   };
 
-  favoriteClick = (id) =>{
+  favoriteClick = (event, id) => {
     // add card to favorites
+    console.log(event)
+    debugger;
   }
 
   render() {
@@ -113,15 +116,13 @@ class SimpleCard extends React.Component {
             <IconButton aria-label="Add to favorites" style={{ margin:"0 0 0 100px "}}>
               <FavoriteIcon onClick={this.favoriteClick} />
             </IconButton>
+            </CardActions>
           </CardActions>
-          </CardActions>
+        <Accordion className={classes.root} />
+
       </div>
     );
   }
 }
-
-SimpleCard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(SimpleCard);

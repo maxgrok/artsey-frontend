@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
+// import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 
 const URL = "https://api.artsy.net/api/";
@@ -67,7 +67,7 @@ class Search extends React.Component {
           onSubmit={this.handleSearch}
         >
           <InputLabel htmlFor="name-simple" />
-          <Input id="name-simple" className="name-simple" onChange={this.props.setSearchTerm} />
+          <Input id="name-simple" onChange={this.props.setSearchTerm} />
           <Button
             type="submit"
             variant="extendedFab"

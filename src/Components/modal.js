@@ -35,12 +35,16 @@ const styles = theme => ({
 });
 
 class SimpleModal extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      open: false
+    }
+  }
 
   handleOpen = () => {
-    this.props.onButtonClick();
+    console.log(this.props)
+    // this.props.onButtonClick(props.id);
     this.setState({ open: true });
   };
 
@@ -59,10 +63,11 @@ class SimpleModal extends React.Component {
           aria-describedby="simple-modal-description"
           open={this.state.open}
           onClose={this.handleClose}
+          /*onButtonClick={this.props.onButtonClick}*/
         >
           <div style={getModalStyle()} className={classes.paper}>
           <CardContent>
-          <img src={this.props.bgImage} style={{width: "290px", height:"164px"}}/>
+          <img alt="imagehere" src={this.props.bgImage} style={{width: "290px", height:"164px"}}/>
           
             <Typography variant="headline" component="h2">
               {this.props.name}
