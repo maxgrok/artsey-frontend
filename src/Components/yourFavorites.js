@@ -1,7 +1,7 @@
 import React from "react";
-import simplecard from "./simplecard";
+import SimpleCard from "./simplecard";
 
-class yourFavorites extends React.Component {
+class YourFavorites extends React.Component {
   //your bot army code here...
   constructor(props){
     super(props)
@@ -16,7 +16,7 @@ class yourFavorites extends React.Component {
           <h1>Your Favorites </h1>
             {/*...and here...*/} {/* map botarmy with botcards */}
             {this.props.favorites.map(favorite =>{
-            return <SimpleCard favorite={favorite} key={favorite.id} onClick={this.props.onClick} />
+            return <SimpleCard key={favorite} onClick={this.props.onClick} />
           })}
           </div>
         </div>
@@ -26,4 +26,4 @@ class yourFavorites extends React.Component {
   
 };
 
-export default yourFavorites;
+export default YourFavorites;

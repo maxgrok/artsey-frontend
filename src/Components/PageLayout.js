@@ -11,13 +11,14 @@ import { impressionism } from "../lib/impressionism";
 
 import NavBar from "./NavBar";
 import PaperSheet from "./paper";
+import YourFavorites from './yourFavorites'
 
 const URL = "https://api.artsy.net/api/";
 const Token =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUzMTMyNDQ4MywiaWF0IjoxNTMwNzE5NjgzLCJhdWQiOiI1YjNjZWRjMmNkNTMwZTA4NTlhMzQ0NWEiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWIzY2VkYzM4YjNiODEzNTQ0MmNkMDExIn0.CSvl6_A9XdChPrMIylGmCnb-iwb5-E1shyyBbC3QGJQ";
 
-const styles = theme => ({
-  root: {
+const styles = theme => ({ 
+  root: { 
     flexGrow: 1
   },
   paper: {
@@ -33,7 +34,8 @@ class PageLayout extends React.Component {
     this.state = {
       searchTerm: {},
       searchResults: {},
-      favorites: {}
+      favorites: [],
+      favoriteClicked: false
     };
     this.setSearchTerm = this.setSearchTerm.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
@@ -86,7 +88,7 @@ class PageLayout extends React.Component {
     this.setState({
       searchResults: { ...this.state.searchResults, ...results }
     });
-    console.log(this.state.searchResults);
+    // console.log(this.state.searchResults);
   }
 
   createGeneCards() {
@@ -97,13 +99,36 @@ class PageLayout extends React.Component {
 
     return genes;
   }
+  handleClick = e =>{
+    // console.log(e) //remove favorites
+    //add favorites if not already in favorites
+  } 
 
   modal(id) {
     //find which artwork/artist/period
-    console.log(this.createGeneCards().find(card => card.id === id));
+    // console.log(this.createGeneCards().find(card => card.id === id));
 
     //select ui card
     //show modal
+  }
+
+  favoriteClick = (event, id) => {
+    // add card to favorites
+    // add favorite to the favorites according to id
+    //make red #B00020
+    
+
+    // if (this.state.favoriteClicked === false){
+    //   this.state.favorites.style.fill = "red";
+    //   if(!this.state.favorites.includes(id)){
+    //     this.setState({favorites: [...this.state.favorites, ]})
+    //   }
+    // } else{
+    //   // this.state.favorites.style.fill = "gray";
+    // }
+        //if red, add to top of screen
+    //if red and clicked, then remove from favorites
+    
   }
   render() {
     const { classes } = this.props;
@@ -111,100 +136,20 @@ class PageLayout extends React.Component {
       <div className={classes.root}>
         <NavBar />
         <PaperSheet />
-        <yourFavorites favorites={this.state.favorites} onClick={this.handleClick}/>
-      
-        <h1>Periods</h1>
-      <Search
-          searchTerm={this.state.searchTerm}
+        <Art />
+          <GeneList searchTerm={this.state.searchTerm} 
           setSearchTerm={this.setSearchTerm}
-          searchFor={this.searchFor}
-        />
-        <Grid container spacing={24}>
-          {this.state.searchResults.gene
-            ? this.state.searchResults.gene._embedded.genes.map(gene => {
-                return (
-                  <Grid item xs={6} sm={3}>
-                    <Paper className={classes.paper}>
-                      <SimpleCard
-                        name={gene.name}
-                        bgImage={
-                          gene._links.thumbnail
-                            ? gene._links.thumbnail.href
-                            : ""
-                        }
-                        description={gene.description.slice(0, 70) + "..."}
-                        detailsView={this.modal}
-                        id={gene.id}
-                        type="gene"
-                      />
-                    </Paper>
-                  </Grid>
-                );
-              })
-            : ""}
-        </Grid>
-        <h1 style={{ textAlign: "center" }}>Artists</h1>
-         <Search
-          searchTerm={this.state.searchTerm}
+          searchFor={this.searchFor} 
+          />
+          <ArtistList searchTerm={this.state.searchTerm} 
           setSearchTerm={this.setSearchTerm}
-          searchFor={this.searchFor}
-        />
-        <Grid container spacing={24}>
-          {this.state.searchResults.artist
-            ? this.state.searchResults.artist._embedded.artists.map(artist => {
-                return (
-                  <Grid item xs={6} sm={3}>
-                    <Paper className={classes.paper}>
-                      <SimpleCard
-                        name={artist.name}
-                        bgImage={
-                          artist._links.thumbnail
-                            ? artist._links.thumbnail.href
-                            : ""
-                        }
-                        description={artist.hometown}
-                        type="artist"
-                        detailsView={this.modal}
-                      />
-                    </Paper>
-                  </Grid>
-                );
-              })
-            : ""}
-        </Grid>
-
-        <h1 style={{ textAlign: "center" }}>Artworks</h1>
-        <Search
-          searchTerm={this.state.searchTerm}
+          searchFor={this.searchFor} 
+           />
+          <ArtworkList searchTerm={this.state.searchTerm} 
           setSearchTerm={this.setSearchTerm}
-          searchFor={this.searchFor}
-        />
-        <Grid container spacing={24}>
-          {this.state.searchResults.artwork
-            ? this.state.searchResults.artwork._embedded.artworks.map(
-                artwork => {
-                  return (
-                    <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper}>
-                        <SimpleCard
-                          name={artwork.title}
-                          bgImage={
-                            artwork._links.thumbnail
-                              ? artwork._links.thumbnail.href
-                              : ""
-                          }
-                          description={artwork.category}
-                          detailsView={this.modal}
-                          id={artwork.id}
-                          type="artwork"
-                        />
-                      </Paper>
-                    </Grid>
-                  );
-                }
-              )
-            : ""}
-        </Grid>
+          searchFor={this.searchFor} 
+           />
+        </Art>
       </div>
     );
   }

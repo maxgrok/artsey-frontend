@@ -44,7 +44,7 @@ class SimpleCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
   }
 
@@ -59,12 +59,6 @@ class SimpleCard extends React.Component {
   handleClick = id => {
     this.props.detailsView(id, this.props.type);
   };
-
-  favoriteClick = (event, id) => {
-    // add card to favorites
-    console.log(event)
-    debugger;
-  }
 
   render() {
     const { classes } = this.props;
@@ -111,7 +105,9 @@ class SimpleCard extends React.Component {
               aria-label="Add to favorites"
               style={{ margin: "0 0 0 100px " }}
             >
-              <FavoriteIcon onClick={this.favoriteClick} />
+              <FavoriteIcon id={this.props.id} onClick={(event) => {
+                this.props.favoriteClick(event, this.props.id)}} />
+              }
             </IconButton>
             </CardActions>
           </CardActions>
