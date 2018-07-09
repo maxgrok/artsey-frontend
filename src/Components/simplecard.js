@@ -1,27 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 // import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 // import SimpleModal from '@material-ui/core/SimpleModal';
-<<<<<<< HEAD
 import Modal from './modal'
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import classnames from 'classnames';
+// import ShareIcon from '@material-ui/icons/Share';
+// import classnames from 'classnames';
 import Accordion from './accordion';
-=======
-import Modal from "./modal";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import classnames from "classnames";
->>>>>>> 96693570ed155244bb2e262863400967dd7497d5
 
 const styles = {
   card: {
@@ -48,16 +40,6 @@ function getModalStyle() {
   };
 }
 
-const modalStyles = theme => ({
-  paper: {
-    position: "absolute",
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4
-  }
-});
-
 class SimpleCard extends React.Component {
   constructor(props) {
     super(props);
@@ -78,21 +60,15 @@ class SimpleCard extends React.Component {
     this.props.detailsView(id, this.props.type);
   };
 
-<<<<<<< HEAD
   favoriteClick = (event, id) => {
     // add card to favorites
     console.log(event)
     debugger;
   }
-=======
-  favoriteClick = id => {
-    // add card to favorites
-  };
->>>>>>> 96693570ed155244bb2e262863400967dd7497d5
 
   render() {
     const { classes } = this.props;
-    const bull = <span className={classes.bullet}>•</span>;
+    // const bull = <span className={classes.bullet}>•</span>;
 
     return (
       <div>
@@ -139,12 +115,7 @@ class SimpleCard extends React.Component {
             </IconButton>
             </CardActions>
           </CardActions>
-<<<<<<< HEAD
         <Accordion className={classes.root} />
-
-=======
-        </CardActions>
->>>>>>> 96693570ed155244bb2e262863400967dd7497d5
       </div>
     );
   }

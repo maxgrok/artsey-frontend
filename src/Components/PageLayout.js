@@ -6,8 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import SimpleCard from "./simplecard";
 import Search from "./search";
 import { impressionism } from "../lib/impressionism";
-import { artists } from "../lib/impressionism-artists";
-import { edgarDegasArtworks } from "../lib/edgar-degas-artworks";
+// // import { artists } from "../lib/impressionism-artists";
+// import { edgarDegasArtworks } from "../lib/edgar-degas-artworks";
 
 import NavBar from "./NavBar";
 import PaperSheet from "./paper";
@@ -32,7 +32,8 @@ class PageLayout extends React.Component {
     super(props);
     this.state = {
       searchTerm: {},
-      searchResults: {}
+      searchResults: {},
+      favorites: {}
     };
     this.setSearchTerm = this.setSearchTerm.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
@@ -110,12 +111,14 @@ class PageLayout extends React.Component {
       <div className={classes.root}>
         <NavBar />
         <PaperSheet />
-        <Search
+        <yourFavorites favorites={this.state.favorites} onClick={this.handleClick}/>
+      
+        <h1>Periods</h1>
+      <Search
           searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
           searchFor={this.searchFor}
         />
-        <h1>Periods</h1>
         <Grid container spacing={24}>
           {this.state.searchResults.gene
             ? this.state.searchResults.gene._embedded.genes.map(gene => {
@@ -141,6 +144,11 @@ class PageLayout extends React.Component {
             : ""}
         </Grid>
         <h1 style={{ textAlign: "center" }}>Artists</h1>
+         <Search
+          searchTerm={this.state.searchTerm}
+          setSearchTerm={this.setSearchTerm}
+          searchFor={this.searchFor}
+        />
         <Grid container spacing={24}>
           {this.state.searchResults.artist
             ? this.state.searchResults.artist._embedded.artists.map(artist => {
@@ -164,7 +172,13 @@ class PageLayout extends React.Component {
               })
             : ""}
         </Grid>
+
         <h1 style={{ textAlign: "center" }}>Artworks</h1>
+        <Search
+          searchTerm={this.state.searchTerm}
+          setSearchTerm={this.setSearchTerm}
+          searchFor={this.searchFor}
+        />
         <Grid container spacing={24}>
           {this.state.searchResults.artwork
             ? this.state.searchResults.artwork._embedded.artworks.map(

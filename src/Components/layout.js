@@ -8,7 +8,7 @@ import Search from "./search";
 import { impressionism } from "../lib/impressionism";
 import { artists } from "../lib/impressionism-artists";
 import { edgarDegasArtworks } from "../lib/edgar-degas-artworks";
-
+import yourFavorites from './yourFavorites'
 import NavBar from "./NavBar";
 import PaperSheet from "./paper";
 
@@ -30,7 +30,8 @@ class FullWidthGrid extends React.Component {
     super(props);
     this.state = {
       searchTerm: "",
-      searchResults: []
+      searchResults: [],
+      favorites: []
     };
     this.setSearchTerm = this.setSearchTerm.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
@@ -68,6 +69,9 @@ class FullWidthGrid extends React.Component {
       <div className={classes.root}>
         <NavBar />
         <PaperSheet />
+
+        <yourFavorites favorites={this.state.favorites}/>
+        
         <Search
           searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}

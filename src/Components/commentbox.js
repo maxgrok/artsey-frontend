@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CommentList from './commentlist';
 import CommentForm from './commentform';
 
-const url ="http://localhost:3000/api/v1/comments";
+// const url ="http://localhost:3000/api/v1/comments";
 const pollInterval = 2000
 
 class CommentBox extends Component {
