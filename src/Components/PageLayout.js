@@ -37,6 +37,7 @@ class PageLayout extends React.Component {
     this.setSearchTerm = this.setSearchTerm.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
     this.searchFor = this.searchFor.bind(this);
+    this.createGeneCards = this.createGeneCards.bind(this);
   }
 
   searchFor(type) {
@@ -129,8 +130,9 @@ class PageLayout extends React.Component {
                             : ""
                         }
                         description={gene.description.slice(0, 70) + "..."}
-                        // artworkModal={this.modal}
+                        detailsView={this.modal}
                         id={gene.id}
+                        type="gene"
                       />
                     </Paper>
                   </Grid>
@@ -153,6 +155,8 @@ class PageLayout extends React.Component {
                             : ""
                         }
                         description={artist.hometown}
+                        type="artist"
+                        detailsView={this.modal}
                       />
                     </Paper>
                   </Grid>
@@ -176,8 +180,9 @@ class PageLayout extends React.Component {
                               : ""
                           }
                           description={artwork.category}
-                          // artworkModal={this.modal}
+                          detailsView={this.modal}
                           id={artwork.id}
+                          type="artwork"
                         />
                       </Paper>
                     </Grid>
