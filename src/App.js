@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 // import SimpleCard from './Components/simplecard';
-import Layout from "./Components/layout";
+import PageLayout from "./Components/PageLayout";
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Layout />
+        <PageLayout />
       </div>
     );
   }

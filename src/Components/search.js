@@ -25,35 +25,35 @@ class Search extends React.Component {
     super(props);
   }
 
-  fetchSearch = () => {
-    console.log(
-      `${URL}artists?size=5&term=${encodeURIComponent(
-        this.props.searchTerm
-      )}&page=1`
-    );
-    fetch(
-      `${URL}artists?size=5&term=${encodeURIComponent(
-        this.props.searchTerm
-      )}&page=1`,
-      {
-        headers: {
-          "X-Xapp-Token": Token
-        }
-      }
-    )
-      .then(resp => {
-        return resp.json();
-      })
-      .then(json => {
-        console.log(json);
-        this.props.setSearchResults(json);
-      });
-  };
+  // fetchSearch = () => {
+  //   console.log(
+  //     `${URL}artists?size=5&term=${encodeURIComponent(
+  //       this.props.searchTerm
+  //     )}&page=1`
+  //   );
+  //   fetch(
+  //     `${URL}artists?size=5&term=${encodeURIComponent(
+  //       this.props.searchTerm
+  //     )}&page=1`,
+  //     {
+  //       headers: {
+  //         "X-Xapp-Token": Token
+  //       }
+  //     }
+  //   )
+  //     .then(resp => {
+  //       return resp.json();
+  //     })
+  //     .then(json => {
+  //       console.log(json);
+  //       this.props.setSearchResults(json);
+  //     });
+  // };
 
   handleSearch = event => {
     event.preventDefault();
 
-    this.fetchSearch();
+    this.props.searchFor("gene");
   };
 
   render() {
@@ -74,7 +74,6 @@ class Search extends React.Component {
             color="primary"
             aria-label="delete"
             className={this.props.button}
-            onTouchTap={this.handleSearch}
           >
             Search
           </Button>
