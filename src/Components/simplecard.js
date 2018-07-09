@@ -8,12 +8,20 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 // import SimpleModal from '@material-ui/core/SimpleModal';
+<<<<<<< HEAD
 import Modal from './modal'
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import classnames from 'classnames';
 import Accordion from './accordion';
+=======
+import Modal from "./modal";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import ShareIcon from "@material-ui/icons/Share";
+import classnames from "classnames";
+>>>>>>> 96693570ed155244bb2e262863400967dd7497d5
 
 const styles = {
   card: {
@@ -36,26 +44,26 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    transform: `translate(-${top}%, -${left}%)`
   };
 }
 
 const modalStyles = theme => ({
   paper: {
-    position: 'absolute',
+    position: "absolute",
     width: theme.spacing.unit * 50,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-  },
+    padding: theme.spacing.unit * 4
+  }
 });
 
 class SimpleCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      open:false
-    }
+    this.state = {
+      open: false
+    };
   }
 
   handleOpen = () => {
@@ -66,15 +74,21 @@ class SimpleCard extends React.Component {
     this.setState({ open: false });
   };
 
-  handleClick = (id) => {
-    this.props.artworkModal(id);
+  handleClick = id => {
+    this.props.detailsView(id, this.props.type);
   };
 
+<<<<<<< HEAD
   favoriteClick = (event, id) => {
     // add card to favorites
     console.log(event)
     debugger;
   }
+=======
+  favoriteClick = id => {
+    // add card to favorites
+  };
+>>>>>>> 96693570ed155244bb2e262863400967dd7497d5
 
   render() {
     const { classes } = this.props;
@@ -82,44 +96,55 @@ class SimpleCard extends React.Component {
 
     return (
       <div>
-          <CardMedia
-            className={classes.media}
-            image={this.props.bgImage}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography variant="headline" component="h2">
-              {this.props.name}
-            </Typography>
-            <Typography component="p">{this.props.description}</Typography>
-          </CardContent>
-          <CardActions>
-            <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
-          onButtonClick={this.handleClick}
-          id={this.props.id}
-        >
-          <div style={getModalStyle()} className={classes.paper}>
-          <CardContent>
-          <img src={classes.bgImage} alt="image here" style={{width: "290px", height:"164px"}}/>
-            <Typography variant="headline" component="h2">
-              {this.props.name}
-            </Typography>
-            <Typography component="p">{this.props.description}</Typography>
-          </CardContent>
-          </div>
-        </Modal>
-        <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites" style={{ margin:"0 0 0 100px "}}>
+        <CardMedia
+          className={classes.media}
+          image={this.props.bgImage}
+          title="Contemplative Reptile"
+        />
+        <CardContent>
+          <Typography variant="headline" component="h2">
+            {this.props.name}
+          </Typography>
+          <Typography component="p">{this.props.description}</Typography>
+        </CardContent>
+        <CardActions>
+          <Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={this.state.open}
+            onClose={this.handleClose}
+            onButtonClick={this.handleClick}
+            id={this.props.id}
+          >
+            <div style={getModalStyle()} className={classes.paper}>
+              <CardContent>
+                <img
+                  src={classes.bgImage}
+                  alt="image here"
+                  style={{ width: "290px", height: "164px" }}
+                />
+                <Typography variant="headline" component="h2">
+                  {this.props.name}
+                </Typography>
+                <Typography component="p">{this.props.description}</Typography>
+              </CardContent>
+            </div>
+          </Modal>
+          <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton
+              aria-label="Add to favorites"
+              style={{ margin: "0 0 0 100px " }}
+            >
               <FavoriteIcon onClick={this.favoriteClick} />
             </IconButton>
             </CardActions>
           </CardActions>
+<<<<<<< HEAD
         <Accordion className={classes.root} />
 
+=======
+        </CardActions>
+>>>>>>> 96693570ed155244bb2e262863400967dd7497d5
       </div>
     );
   }
