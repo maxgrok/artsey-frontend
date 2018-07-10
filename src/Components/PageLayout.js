@@ -32,12 +32,15 @@ class PageLayout extends React.Component {
     super(props);
     this.state = {
       searchTerm: {},
-      searchResults: {}
+      searchResults: {},
+      itemDetails: {}
     };
     this.setSearchTerm = this.setSearchTerm.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
     this.searchFor = this.searchFor.bind(this);
     this.createGeneCards = this.createGeneCards.bind(this);
+    this.modal = this.modal.bind(this);
+    this.getDetails = this.getDetails.bind(this);
   }
 
   searchFor(type) {
@@ -46,29 +49,46 @@ class PageLayout extends React.Component {
       this.state.searchTerm[type] === undefined ||
       this.state.searchTerm[type] === ""
     ) {
+      // debugger;
       searchString = `${URL}${type}s?size=4&offset=${Math.floor(
         Math.random() * 1000
       )}&page=1`;
-    } else {
-      searchString = `${URL}${type}s?size=4&term=${encodeURIComponent(
-        this.state.searchTerm.type
-      )}&page=1`;
-    }
-    console.log(searchString);
-    fetch(searchString, {
-      headers: {
-        "X-Xapp-Token": Token
-      }
-    })
-      .then(resp => {
-        return resp.json();
+      console.log(searchString);
+      fetch(searchString, {
+        headers: {
+          "X-Xapp-Token": Token
+        }
       })
-      .then(json => {
-        let temp = {};
-        temp[type] = json;
-        console.log(temp);
-        this.setSearchResults(temp);
-      });
+        .then(resp => {
+          return resp.json();
+        })
+        .then(json => {
+          let temp = {};
+          temp[type] = json._embedded[`${type}s`];
+          console.log(temp);
+          this.setSearchResults(temp);
+        });
+    } else {
+      // debugger;
+      searchString = `${URL}search?size=4&q=${encodeURIComponent(
+        this.state.searchTerm[type]
+      )}&page=1&type=${type}`;
+      console.log(searchString);
+      fetch(searchString, {
+        headers: {
+          "X-Xapp-Token": Token
+        }
+      })
+        .then(resp => {
+          return resp.json();
+        })
+        .then(json => {
+          let temp = {};
+          temp[type] = json._embedded.results;
+          console.log(temp);
+          this.setSearchResults(temp);
+        });
+    }
   }
 
   componentDidMount() {
@@ -78,7 +98,9 @@ class PageLayout extends React.Component {
   }
 
   setSearchTerm(term, type) {
-    this.setState({ searchTerm: { type: term.target.value } });
+    let searchTerm = this.state.searchTerm;
+    searchTerm[type] = term.target.value;
+    this.setState({ searchTerm: searchTerm });
   }
 
   setSearchResults(results) {
@@ -97,9 +119,22 @@ class PageLayout extends React.Component {
     return genes;
   }
 
-  modal(id) {
+  getDetails(url) {
+    return fetch(url, {
+      headers: {
+        "X-Xapp-Token": Token
+      }
+    }).then(resp => {
+      console.log(resp);
+      return resp.json();
+    });
+  }
+
+  async modal(item) {
     //find which artwork/artist/period
-    console.log(this.createGeneCards().find(card => card.id === id));
+    let details = await this.getDetails(item._links.self.href);
+    console.log(details);
+    // console.log(this.createGeneCards().find(card => card.id === id));
 
     //select ui card
     //show modal
@@ -110,29 +145,34 @@ class PageLayout extends React.Component {
       <div className={classes.root}>
         <NavBar />
         <PaperSheet />
-        <Search
-          searchTerm={this.state.searchTerm}
-          setSearchTerm={this.setSearchTerm}
-          searchFor={this.searchFor}
-        />
-        <h1>Periods</h1>
+
+        <h1>
+          Periods
+          <Search
+            searchTerm={this.state.searchTerm}
+            setSearchTerm={this.setSearchTerm}
+            searchFor={() => this.searchFor("gene")}
+            type="gene"
+          />
+        </h1>
         <Grid container spacing={24}>
           {this.state.searchResults.gene
-            ? this.state.searchResults.gene._embedded.genes.map(gene => {
+            ? this.state.searchResults.gene.map(gene => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={classes.paper}>
                       <SimpleCard
-                        name={gene.name}
+                        name={gene.title ? gene.title : gene.name}
                         bgImage={
                           gene._links.thumbnail
                             ? gene._links.thumbnail.href
                             : ""
                         }
-                        description={gene.description.slice(0, 70) + "..."}
+                        description="" //{gene.description.slice(0, 70) + "..."}
                         detailsView={this.modal}
                         id={gene.id}
                         type="gene"
+                        item={gene}
                       />
                     </Paper>
                   </Grid>
@@ -141,14 +181,20 @@ class PageLayout extends React.Component {
             : ""}
         </Grid>
         <h1 style={{ textAlign: "center" }}>Artists</h1>
+        <Search
+          searchTerm={this.state.searchTerm}
+          setSearchTerm={this.setSearchTerm}
+          searchFor={() => this.searchFor("artist")}
+          type="artist"
+        />
         <Grid container spacing={24}>
           {this.state.searchResults.artist
-            ? this.state.searchResults.artist._embedded.artists.map(artist => {
+            ? this.state.searchResults.artist.map(artist => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={classes.paper}>
                       <SimpleCard
-                        name={artist.name}
+                        name={artist.title ? artist.title : artist.name}
                         bgImage={
                           artist._links.thumbnail
                             ? artist._links.thumbnail.href
@@ -157,6 +203,7 @@ class PageLayout extends React.Component {
                         description={artist.hometown}
                         type="artist"
                         detailsView={this.modal}
+                        itemDetails={this.state.itemDetails}
                       />
                     </Paper>
                   </Grid>
@@ -165,30 +212,34 @@ class PageLayout extends React.Component {
             : ""}
         </Grid>
         <h1 style={{ textAlign: "center" }}>Artworks</h1>
+        <Search
+          searchTerm={this.state.searchTerm}
+          setSearchTerm={this.setSearchTerm}
+          searchFor={() => this.searchFor("artwork")}
+          type="artwork"
+        />
         <Grid container spacing={24}>
           {this.state.searchResults.artwork
-            ? this.state.searchResults.artwork._embedded.artworks.map(
-                artwork => {
-                  return (
-                    <Grid item xs={6} sm={3}>
-                      <Paper className={classes.paper}>
-                        <SimpleCard
-                          name={artwork.title}
-                          bgImage={
-                            artwork._links.thumbnail
-                              ? artwork._links.thumbnail.href
-                              : ""
-                          }
-                          description={artwork.category}
-                          detailsView={this.modal}
-                          id={artwork.id}
-                          type="artwork"
-                        />
-                      </Paper>
-                    </Grid>
-                  );
-                }
-              )
+            ? this.state.searchResults.artwork.map(artwork => {
+                return (
+                  <Grid item xs={6} sm={3}>
+                    <Paper className={classes.paper}>
+                      <SimpleCard
+                        name={artwork.title ? artwork.title : artwork.name}
+                        bgImage={
+                          artwork._links.thumbnail
+                            ? artwork._links.thumbnail.href
+                            : ""
+                        }
+                        description={artwork.category}
+                        detailsView={this.modal}
+                        id={artwork.id}
+                        type="artwork"
+                      />
+                    </Paper>
+                  </Grid>
+                );
+              })
             : ""}
         </Grid>
       </div>

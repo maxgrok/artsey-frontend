@@ -66,7 +66,7 @@ class SimpleCard extends React.Component {
   };
 
   handleClick = id => {
-    this.props.detailsView(id, this.props.type);
+    this.props.detailsView(this.props.item);
   };
 
   favoriteClick = id => {
