@@ -7,8 +7,8 @@ const geneList =(props) =>{
           searchFor={this.props.searchFor}
         />
         <Grid container spacing={24}>
-          {this.state.searchResults.gene
-            ? this.state.searchResults.gene._embedded.genes.map(gene => {
+          {this.props.searchResults.gene
+            ? this.props.searchResults.gene._embedded.genes.map(gene => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={classes.paper}>
