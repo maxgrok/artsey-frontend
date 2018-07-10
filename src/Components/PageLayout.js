@@ -11,14 +11,17 @@ import { impressionism } from "../lib/impressionism";
 
 import NavBar from "./NavBar";
 import PaperSheet from "./paper";
-import YourFavorites from './yourFavorites'
+import YourFavorites from "./yourFavorites";
+import ArtistList from "./ArtistList";
+import ArtworkList from "./ArtworkList";
+import GeneList from "./GeneList";
 
 const URL = "https://api.artsy.net/api/";
 const Token =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsImV4cCI6MTUzMTMyNDQ4MywiaWF0IjoxNTMwNzE5NjgzLCJhdWQiOiI1YjNjZWRjMmNkNTMwZTA4NTlhMzQ0NWEiLCJpc3MiOiJHcmF2aXR5IiwianRpIjoiNWIzY2VkYzM4YjNiODEzNTQ0MmNkMDExIn0.CSvl6_A9XdChPrMIylGmCnb-iwb5-E1shyyBbC3QGJQ";
 
-const styles = theme => ({ 
-  root: { 
+const styles = theme => ({
+  root: {
     flexGrow: 1
   },
   paper: {
@@ -99,15 +102,14 @@ class PageLayout extends React.Component {
 
     return genes;
   }
-  handleClick = e =>{
+  handleClick = e => {
     // console.log(e) //remove favorites
     //add favorites if not already in favorites
-  } 
+  };
 
   modal(id) {
     //find which artwork/artist/period
     // console.log(this.createGeneCards().find(card => card.id === id));
-
     //select ui card
     //show modal
   }
@@ -116,8 +118,6 @@ class PageLayout extends React.Component {
     // add card to favorites
     // add favorite to the favorites according to id
     //make red #B00020
-    
-
     // if (this.state.favoriteClicked === false){
     //   this.state.favorites.style.fill = "red";
     //   if(!this.state.favorites.includes(id)){
@@ -126,30 +126,34 @@ class PageLayout extends React.Component {
     // } else{
     //   // this.state.favorites.style.fill = "gray";
     // }
-        //if red, add to top of screen
+    //if red, add to top of screen
     //if red and clicked, then remove from favorites
-    
-  }
+  };
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <NavBar />
         <PaperSheet />
-        <Art />
-          <GeneList searchTerm={this.state.searchTerm} 
+
+        <GeneList
+          searchResults={this.state.searchResults.gene}
+          searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
-          searchFor={this.searchFor} 
-          />
-          <ArtistList searchTerm={this.state.searchTerm} 
+          searchFor={this.searchFor}
+        />
+        <ArtistList
+          searchResults={this.state.searchResults.artist}
+          searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
-          searchFor={this.searchFor} 
-           />
-          <ArtworkList searchTerm={this.state.searchTerm} 
+          searchFor={this.searchFor}
+        />
+        <ArtworkList
+          searchResults={this.state.searchResults.artwork}
+          searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
-          searchFor={this.searchFor} 
-           />
-        </Art>
+          searchFor={this.searchFor}
+        />
       </div>
     );
   }

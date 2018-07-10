@@ -1,14 +1,25 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import SimpleCard from "./simplecard";
+import Search from "./search";
 
-const artistList = (props) =>{
+export default class ArtistList extends React.Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <div>
         <h1 style={{ textAlign: "center" }}>Artists</h1>
-         <Search
+        <Search
           searchTerm={this.props.searchTerm}
           setSearchTerm={this.props.setSearchTerm}
           searchFor={this.props.searchFor}
         />
         <Grid container spacing={24}>
-          {this.state.searchResults.artist
-            ? this.state.searchResults.artist._embedded.artists.map(artist => {
+          {this.props.searchResults
+            ? this.props.searchResults._embedded.artists.map(artist => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={classes.paper}>
@@ -24,7 +35,6 @@ const artistList = (props) =>{
                         type="artist"
                         detailsView={this.modal}
                         favoriteClick={this.favoriteClick(artist.id)}
-
                       />
                     </Paper>
                   </Grid>
@@ -32,4 +42,7 @@ const artistList = (props) =>{
               })
             : ""}
         </Grid>
-      }
+      </div>
+    );
+  }
+}
