@@ -15,18 +15,18 @@ export default class ArtistList extends React.Component {
         <Search
           searchTerm={this.props.searchTerm}
           setSearchTerm={this.props.setSearchTerm}
-          searchFor={() => this.searchFor("artist")}
+          searchFor={() => this.props.searchFor("artist")}
           type="artist"
         />
         <Grid container spacing={24}>
           {this.props.searchResults
-            ? this.props.searchResults._embedded.artists.map(artist => {
+            ? this.props.searchResults.map(artist => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={this.props.paper}>
                       <SimpleCard
                         name={artist.title ? artist.title : artist.name}
-                        id={artist.id}
+                        id={artist._links.self.href}
                         bgImage={
                           artist._links.thumbnail
                             ? artist._links.thumbnail.href

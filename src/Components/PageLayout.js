@@ -72,7 +72,8 @@ class PageLayout extends React.Component {
           temp[type] = json._embedded[`${type}s`];
           console.log(temp);
           this.setSearchResults(temp);
-        });
+        })
+        .catch(err => console.log(err));
     } else {
       // debugger;
       searchString = `${URL}search?size=4&q=${encodeURIComponent(
@@ -124,7 +125,7 @@ class PageLayout extends React.Component {
     return genes;
   }
   handleClick = e => {
-     console.log(e) //remove favorites
+    console.log(e); //remove favorites
     //add favorites if not already in favorites
   };
 
@@ -150,20 +151,30 @@ class PageLayout extends React.Component {
   }
 
   favoriteClick = (event, id) => {
-    console.log(event, id)
-    let searchResults =[]
-    searchResults.push(this.state.searchResults)
-    searchResults.filter(type =>{
-      if (type["gene"].find(gene =>gene._links.self.href === id).length !== 0 && this.state.favorites.find(favoriteid => favoriteid === id) === 0){
-        this.setState({favorites:[...this.state.favorites, id]})
-        console.log(this.state.favorites)
+    console.log(event, id);
+    let searchResults = [];
+    searchResults.push(this.state.searchResults);
+    searchResults.filter(type => {
+      if (
+        type["gene"].find(gene => gene._links.self.href === id).length !== 0 &&
+        this.state.favorites.find(favoriteid => favoriteid === id) === 0
+      ) {
+        this.setState({ favorites: [...this.state.favorites, id] });
+        console.log(this.state.favorites);
+      } else if (
+        type["artwork"].find(artwork => artwork._links.self.href === id)
+          .length !== 0 &&
+        this.state.favorites.find(favoriteid => favoriteid === id) === 0
+      ) {
+        this.setState({ favorites: [...this.state.favorites, id] });
+      } else if (
+        type["artist"].find(artist => artist._links.self.href === id).length !==
+          0 &&
+        this.state.favorites.find(favoriteid => favoriteid === id) === 0
+      ) {
+        this.setState({ favorites: [...this.state.favorites, id] });
       }
-       else if(type["artwork"].find(artwork => artwork._links.self.href === id).length !== 0 && this.state.favorites.find(favoriteid => favoriteid === id) === 0){
-        this.setState({favorites: [...this.state.favorites, id]})
-      } else if(type["artist"].find(artist => artist._links.self.href === id).length !== 0&& this.state.favorites.find(favoriteid => favoriteid === id) === 0){
-        this.setState({favorites: [...this.state.favorites, id]})
-      }
-    })  
+    });
     // add card to favorites
     // add favorite to the favorites according to id
     //make red #B00020
