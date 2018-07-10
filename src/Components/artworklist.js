@@ -15,12 +15,12 @@ export default class ArtworkList extends React.Component {
         <Search
           searchTerm={this.props.searchTerm}
           setSearchTerm={this.props.setSearchTerm}
-          searchFor={() => this.searchFor("artwork")}
+          searchFor={() => this.props.searchFor("artwork")}
           type="artwork"
         />
         <Grid container spacing={24}>
           {this.props.searchResults
-            ? this.props.searchResults.artwork.map(artwork => {
+            ? this.props.searchResults.map(artwork => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={this.props.paper}>
@@ -33,7 +33,7 @@ export default class ArtworkList extends React.Component {
                         }
                         description={artwork.category}
                         detailsView={this.modal}
-                        id={artwork._link.self.href}
+                        id={artwork._links.self.href}
                         type="artwork"
                         favoriteClick={this.props.favoriteClick}
                       />

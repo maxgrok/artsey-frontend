@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import SimpleCard from "./simplecard";
 import Search from "./search";
 
-
 export default class GeneList extends React.Component {
   constructor(props) {
     super(props);
@@ -19,12 +18,12 @@ export default class GeneList extends React.Component {
         <Search
           searchTerm={this.props.searchTerm}
           setSearchTerm={this.props.setSearchTerm}
-          searchFor={this.props.searchFor("gene")}
+          searchFor={() => this.props.searchFor("gene")}
           type="gene"
         />
         <Grid container spacing={24}>
           {this.props.searchResults
-            ? this.props.searchResults.gene.map(gene => {
+            ? this.props.searchResults.map(gene => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={this.props.paper}>
@@ -35,7 +34,7 @@ export default class GeneList extends React.Component {
                             ? gene._links.thumbnail.href
                             : ""
                         }
-                        description={gene.description.slice(0, 70) + "..."}
+                        description="" // {gene.description.slice(0, 70) + "..."}
                         detailsView={this.modal}
                         id={gene._links.self.href}
                         type="gene"
