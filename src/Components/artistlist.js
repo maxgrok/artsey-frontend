@@ -20,7 +20,7 @@ export default class ArtistList extends React.Component {
         />
         <Grid container spacing={24}>
           {this.props.searchResults
-            ? this.props.searchResults._embedded.artists.map(artist => {
+            ? this.props.searchResults.artist.map(artist => {
                 return (
                   <Grid item xs={6} sm={3}>
                     <Paper className={this.props.paper}>
