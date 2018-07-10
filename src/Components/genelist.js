@@ -1,21 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+// import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import SimpleCard from "./simplecard";
 import Search from "./search";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  }
-});
 
 export default class GeneList extends React.Component {
   constructor(props) {
@@ -32,16 +22,11 @@ export default class GeneList extends React.Component {
           searchFor={this.props.searchFor}
         />
         <Grid container spacing={24}>
-<<<<<<< HEAD
-          {this.props.searchResults.gene
-            ? this.props.searchResults.gene._embedded.genes.map(gene => {
-=======
           {this.props.searchResults
-            ? this.props.searchResults._embedded.genes.map(gene => {
->>>>>>> aa53934a4c285760d2659df13fb9612dd03df200
+            ? this.props.searchResults.gene.map(gene => {
                 return (
                   <Grid item xs={6} sm={3}>
-                    <Paper className={classes.paper}>
+                    <Paper className={this.props.paper}>
                       <SimpleCard
                         name={gene.name}
                         bgImage={
@@ -51,9 +36,9 @@ export default class GeneList extends React.Component {
                         }
                         description={gene.description.slice(0, 70) + "..."}
                         detailsView={this.modal}
-                        id={gene.id}
+                        id={gene._links.self.href}
                         type="gene"
-                        favoriteClick={this.favoriteClick}
+                        favoriteClick={this.props.favoriteClick}
                       />
                     </Paper>
                   </Grid>

@@ -107,7 +107,7 @@ class SimpleCard extends React.Component {
             >
               <FavoriteIcon id={this.props.id} onClick={(event) => {
                 this.props.favoriteClick(event, this.props.id)}} />
-              }
+              
             </IconButton>
             </CardActions>
           </CardActions>

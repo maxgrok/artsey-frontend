@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+// import PropTypes from "prop-types";
+// import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import SimpleCard from "./simplecard";
@@ -19,10 +19,10 @@ export default class ArtworkList extends React.Component {
         />
         <Grid container spacing={24}>
           {this.props.searchResults
-            ? this.props.searchResults._embedded.artworks.map(artwork => {
+            ? this.props.searchResults.artwork.map(artwork => {
                 return (
                   <Grid item xs={6} sm={3}>
-                    <Paper className={classes.paper}>
+                    <Paper className={this.props.paper}>
                       <SimpleCard
                         name={artwork.title}
                         bgImage={
@@ -32,9 +32,9 @@ export default class ArtworkList extends React.Component {
                         }
                         description={artwork.category}
                         detailsView={this.modal}
-                        id={artwork.id}
+                        id={artwork._link.self.href}
                         type="artwork"
-                        favoriteClick={this.favoriteClick(artwork.id)}
+                        favoriteClick={this.props.favoriteClick}
                       />
                     </Paper>
                   </Grid>

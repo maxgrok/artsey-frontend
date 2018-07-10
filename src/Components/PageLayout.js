@@ -1,20 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import SimpleCard from "./simplecard";
-import Search from "./search";
+// import Paper from "@material-ui/core/Paper";
+// import Grid from "@material-ui/core/Grid";
+// import SimpleCard from "./simplecard";
+// import Search from "./search";
 import { impressionism } from "../lib/impressionism";
 // // import { artists } from "../lib/impressionism-artists";
 // import { edgarDegasArtworks } from "../lib/edgar-degas-artworks";
 
 import NavBar from "./NavBar";
 import PaperSheet from "./paper";
-import YourFavorites from "./yourFavorites";
-import ArtistList from "./ArtistList";
-import ArtworkList from "./ArtworkList";
-import GeneList from "./GeneList";
+import ArtistList from "./artistlist";
+import ArtworkList from "./artworklist";
+import GeneList from "./genelist";
 
 const URL = "https://api.artsy.net/api/";
 const Token =
@@ -103,7 +102,7 @@ class PageLayout extends React.Component {
     return genes;
   }
   handleClick = e => {
-    // console.log(e) //remove favorites
+     console.log(e) //remove favorites
     //add favorites if not already in favorites
   };
 
@@ -115,6 +114,20 @@ class PageLayout extends React.Component {
   }
 
   favoriteClick = (event, id) => {
+    console.log(event, id)
+    let searchResults =[]
+    searchResults.push(this.state.searchResults)
+    searchResults.filter(type =>{
+      if (type["gene"].find(gene =>gene._links.self.href === id).length !== 0 && this.state.favorites.find(favoriteid => favoriteid === id) === 0){
+        this.setState({favorites:[...this.state.favorites, id]})
+        console.log(this.state.favorites)
+      }
+       else if(type["artwork"].find(artwork => artwork._links.self.href === id).length !== 0 && this.state.favorites.find(favoriteid => favoriteid === id) === 0){
+        this.setState({favorites: [...this.state.favorites, id]})
+      } else if(type["artist"].find(artist => artist._links.self.href === id).length !== 0&& this.state.favorites.find(favoriteid => favoriteid === id) === 0){
+        this.setState({favorites: [...this.state.favorites, id]})
+      }
+    })  
     // add card to favorites
     // add favorite to the favorites according to id
     //make red #B00020
@@ -141,18 +154,23 @@ class PageLayout extends React.Component {
           searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
           searchFor={this.searchFor}
+
+          favoriteClick={this.favoriteClick}
         />
         <ArtistList
           searchResults={this.state.searchResults.artist}
           searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
           searchFor={this.searchFor}
+
+          favoriteClick={this.favoriteClick}
         />
         <ArtworkList
           searchResults={this.state.searchResults.artwork}
           searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
           searchFor={this.searchFor}
+          favoriteClick={this.favoriteClick}
         />
       </div>
     );

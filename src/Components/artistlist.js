@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+// import PropTypes from "prop-types";
+// import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import SimpleCard from "./simplecard";
@@ -22,7 +22,7 @@ export default class ArtistList extends React.Component {
             ? this.props.searchResults._embedded.artists.map(artist => {
                 return (
                   <Grid item xs={6} sm={3}>
-                    <Paper className={classes.paper}>
+                    <Paper className={this.props.paper}>
                       <SimpleCard
                         name={artist.name}
                         id={artist.id}
@@ -34,7 +34,7 @@ export default class ArtistList extends React.Component {
                         description={artist.hometown}
                         type="artist"
                         detailsView={this.modal}
-                        favoriteClick={this.favoriteClick(artist.id)}
+                        favoriteClick={this.props.favoriteClick}
                       />
                     </Paper>
                   </Grid>
