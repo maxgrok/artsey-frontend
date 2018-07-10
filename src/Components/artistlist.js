@@ -15,7 +15,8 @@ export default class ArtistList extends React.Component {
         <Search
           searchTerm={this.props.searchTerm}
           setSearchTerm={this.props.setSearchTerm}
-          searchFor={this.props.searchFor}
+          searchFor={() => this.searchFor("artist")}
+          type="artist"
         />
         <Grid container spacing={24}>
           {this.props.searchResults
@@ -24,7 +25,7 @@ export default class ArtistList extends React.Component {
                   <Grid item xs={6} sm={3}>
                     <Paper className={this.props.paper}>
                       <SimpleCard
-                        name={artist.name}
+                        name={artist.title ? artist.title : artist.name}
                         id={artist.id}
                         bgImage={
                           artist._links.thumbnail

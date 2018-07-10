@@ -37,12 +37,15 @@ class PageLayout extends React.Component {
       searchTerm: {},
       searchResults: {},
       favorites: [],
-      favoriteClicked: false
+      favoriteClicked: false,
+      itemDetails: {}
     };
     this.setSearchTerm = this.setSearchTerm.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
     this.searchFor = this.searchFor.bind(this);
     this.createGeneCards = this.createGeneCards.bind(this);
+    this.modal = this.modal.bind(this);
+    this.getDetails = this.getDetails.bind(this);
   }
 
   searchFor(type) {
@@ -51,29 +54,46 @@ class PageLayout extends React.Component {
       this.state.searchTerm[type] === undefined ||
       this.state.searchTerm[type] === ""
     ) {
+      // debugger;
       searchString = `${URL}${type}s?size=4&offset=${Math.floor(
         Math.random() * 1000
       )}&page=1`;
-    } else {
-      searchString = `${URL}${type}s?size=4&term=${encodeURIComponent(
-        this.state.searchTerm.type
-      )}&page=1`;
-    }
-    console.log(searchString);
-    fetch(searchString, {
-      headers: {
-        "X-Xapp-Token": Token
-      }
-    })
-      .then(resp => {
-        return resp.json();
+      console.log(searchString);
+      fetch(searchString, {
+        headers: {
+          "X-Xapp-Token": Token
+        }
       })
-      .then(json => {
-        let temp = {};
-        temp[type] = json;
-        console.log(temp);
-        this.setSearchResults(temp);
-      });
+        .then(resp => {
+          return resp.json();
+        })
+        .then(json => {
+          let temp = {};
+          temp[type] = json._embedded[`${type}s`];
+          console.log(temp);
+          this.setSearchResults(temp);
+        });
+    } else {
+      // debugger;
+      searchString = `${URL}search?size=4&q=${encodeURIComponent(
+        this.state.searchTerm[type]
+      )}&page=1&type=${type}`;
+      console.log(searchString);
+      fetch(searchString, {
+        headers: {
+          "X-Xapp-Token": Token
+        }
+      })
+        .then(resp => {
+          return resp.json();
+        })
+        .then(json => {
+          let temp = {};
+          temp[type] = json._embedded.results;
+          console.log(temp);
+          this.setSearchResults(temp);
+        });
+    }
   }
 
   componentDidMount() {
@@ -83,7 +103,9 @@ class PageLayout extends React.Component {
   }
 
   setSearchTerm(term, type) {
-    this.setState({ searchTerm: { type: term.target.value } });
+    let searchTerm = this.state.searchTerm;
+    searchTerm[type] = term.target.value;
+    this.setState({ searchTerm: searchTerm });
   }
 
   setSearchResults(results) {
@@ -106,8 +128,22 @@ class PageLayout extends React.Component {
     //add favorites if not already in favorites
   };
 
-  modal(id) {
+  getDetails(url) {
+    return fetch(url, {
+      headers: {
+        "X-Xapp-Token": Token
+      }
+    }).then(resp => {
+      console.log(resp);
+      return resp.json();
+    });
+  }
+
+  async modal(item) {
     //find which artwork/artist/period
+    // console.log(this.createGeneCards().find(card => card.id === id));
+    let details = await this.getDetails(item._links.self.href);
+    console.log(details);
     // console.log(this.createGeneCards().find(card => card.id === id));
     //select ui card
     //show modal
@@ -148,13 +184,11 @@ class PageLayout extends React.Component {
       <div className={classes.root}>
         <NavBar />
         <PaperSheet />
-
         <GeneList
           searchResults={this.state.searchResults.gene}
           searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
           searchFor={this.searchFor}
-
           favoriteClick={this.favoriteClick}
         />
         <ArtistList
@@ -162,7 +196,6 @@ class PageLayout extends React.Component {
           searchTerm={this.state.searchTerm}
           setSearchTerm={this.setSearchTerm}
           searchFor={this.searchFor}
-
           favoriteClick={this.favoriteClick}
         />
         <ArtworkList

@@ -19,7 +19,8 @@ export default class GeneList extends React.Component {
         <Search
           searchTerm={this.props.searchTerm}
           setSearchTerm={this.props.setSearchTerm}
-          searchFor={this.props.searchFor}
+          searchFor={this.props.searchFor("gene")}
+          type="gene"
         />
         <Grid container spacing={24}>
           {this.props.searchResults
@@ -28,7 +29,7 @@ export default class GeneList extends React.Component {
                   <Grid item xs={6} sm={3}>
                     <Paper className={this.props.paper}>
                       <SimpleCard
-                        name={gene.name}
+                        name={gene.title ? gene.title : gene.name}
                         bgImage={
                           gene._links.thumbnail
                             ? gene._links.thumbnail.href

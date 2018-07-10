@@ -25,49 +25,27 @@ class Search extends React.Component {
     super(props);
   }
 
-  // fetchSearch = () => {
-  //   console.log(
-  //     `${URL}artists?size=5&term=${encodeURIComponent(
-  //       this.props.searchTerm
-  //     )}&page=1`
-  //   );
-  //   fetch(
-  //     `${URL}artists?size=5&term=${encodeURIComponent(
-  //       this.props.searchTerm
-  //     )}&page=1`,
-  //     {
-  //       headers: {
-  //         "X-Xapp-Token": Token
-  //       }
-  //     }
-  //   )
-  //     .then(resp => {
-  //       return resp.json();
-  //     })
-  //     .then(json => {
-  //       console.log(json);
-  //       this.props.setSearchResults(json);
-  //     });
-  // };
-
   handleSearch = event => {
     event.preventDefault();
 
-    this.props.searchFor("gene");
+    this.props.searchFor(this.props.type);
   };
 
   render() {
     const { classes } = this.props;
 
     return (
-      <div className={classes.container}>
+      <span className={classes.container}>
         <form
           className={classes.formControl}
           style={{ margin: "0 auto" }}
           onSubmit={this.handleSearch}
         >
           <InputLabel htmlFor="name-simple" />
-          <Input id="name-simple" onChange={this.props.setSearchTerm} />
+          <Input
+            id="name-simple"
+            onChange={e => this.props.setSearchTerm(e, this.props.type)}
+          />
           <Button
             type="submit"
             variant="extendedFab"
@@ -78,7 +56,7 @@ class Search extends React.Component {
             Search
           </Button>
         </form>
-      </div>
+      </span>
     );
   }
 }
