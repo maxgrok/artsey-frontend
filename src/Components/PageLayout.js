@@ -8,6 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { impressionism } from "../lib/impressionism";
 // // import { artists } from "../lib/impressionism-artists";
 // import { edgarDegasArtworks } from "../lib/edgar-degas-artworks";
+import YourFavorites from './yourFavorites';
 
 import NavBar from "./NavBar";
 import PaperSheet from "./paper";
@@ -150,31 +151,14 @@ class PageLayout extends React.Component {
     //show modal
   }
 
-  favoriteClick = (event, id) => {
-    console.log(event, id);
-    let searchResults = [];
-    searchResults.push(this.state.searchResults);
-    searchResults.filter(type => {
-      if (
-        type["gene"].find(gene => gene._links.self.href === id).length !== 0 &&
-        this.state.favorites.find(favoriteid => favoriteid === id) === 0
-      ) {
-        this.setState({ favorites: [...this.state.favorites, id] });
-        console.log(this.state.favorites);
-      } else if (
-        type["artwork"].find(artwork => artwork._links.self.href === id)
-          .length !== 0 &&
-        this.state.favorites.find(favoriteid => favoriteid === id) === 0
-      ) {
-        this.setState({ favorites: [...this.state.favorites, id] });
-      } else if (
-        type["artist"].find(artist => artist._links.self.href === id).length !==
-          0 &&
-        this.state.favorites.find(favoriteid => favoriteid === id) === 0
-      ) {
-        this.setState({ favorites: [...this.state.favorites, id] });
-      }
-    });
+  favoriteClick = (item) => {
+    if (!this.state.favorites.find(itemfav => itemfav._links.self.href === item._links.self.href)){
+      this.setState({favorites:[...this.state.favorites, item]});
+    } else{
+      this.setState({favorites: this.state.favorites.filter(itemfav => itemfav._links.self.href !== item._links.self.href)})
+    }
+
+
     // add card to favorites
     // add favorite to the favorites according to id
     //make red #B00020
@@ -183,18 +167,19 @@ class PageLayout extends React.Component {
     //   if(!this.state.favorites.includes(id)){
     //     this.setState({favorites: [...this.state.favorites, ]})
     //   }
-    // } else{
+    // } else { 
     //   // this.state.favorites.style.fill = "gray";
     // }
     //if red, add to top of screen
     //if red and clicked, then remove from favorites
-  };
+  }
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <NavBar />
         <PaperSheet />
+        <YourFavorites favorites={this.state.favorites}/>
         <GeneList
           searchResults={this.state.searchResults.gene}
           searchTerm={this.state.searchTerm}

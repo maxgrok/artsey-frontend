@@ -45,7 +45,18 @@ class SimpleCard extends React.Component {
     super(props);
     this.state = {
       open: false,
+      clicked: false
     };
+  }
+
+  toggleFavorite(event){
+    if(this.state.clicked === false){
+      event.target.style.fill = "red";
+      this.setState({clicked: true})
+    } else if(this.state.clicked === true){
+      event.target.style.fill = "gray";
+      this.setState({clicked: false})
+    }
   }
 
   handleOpen = () => {
@@ -105,9 +116,9 @@ class SimpleCard extends React.Component {
               aria-label="Add to favorites"
               style={{ margin: "0 0 0 100px " }}
             >
-              <FavoriteIcon id={this.props.id} onClick={(event) => {
-                this.props.favoriteClick(event, this.props.id)}} />
-              
+              <FavoriteIcon id={this.props.id} onClick={(event)=>{
+                this.toggleFavorite(event)
+                this.props.favoriteClick(event, this.props.item)}} style={this.props.color} />
             </IconButton>
             </CardActions>
           </CardActions>
