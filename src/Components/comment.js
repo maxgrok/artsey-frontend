@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Remarkable from 'remarkable';
+import Remarkable from "remarkable";
 
 class Comment extends Component {
-	rawMarkup() {
-      var md = new Remarkable();
-      var rawMarkup = md.render(this.props.children.toString());
-      return { __html: rawMarkup };
-  	}
+  rawMarkup() {
+    var md = new Remarkable();
+    var rawMarkup = md.render(this.props.children.toString());
+    return { __html: rawMarkup };
+  }
 
-    render() {
-        return (
+  render() {
+    return (
       <div className="comment">
-        <h4 style={{textAlign: "left"}}>
-          {this.props.author}
-        </h4>
+        <h4 style={{ textAlign: "left" }}>{this.props.author}</h4>
         <span dangerouslySetInnerHTML={this.rawMarkup()} />
+        <button onClick={() => this.props.deleteComment(this.props.id)}>
+          Delete Comment
+        </button>
       </div>
     );
-    }
+  }
 }
 
 export default Comment;

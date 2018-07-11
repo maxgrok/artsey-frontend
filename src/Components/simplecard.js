@@ -8,12 +8,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 // import SimpleModal from '@material-ui/core/SimpleModal';
-import Modal from './modal'
-import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import Modal from "./modal";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 // import ShareIcon from '@material-ui/icons/Share';
 // import classnames from 'classnames';
-import Accordion from './accordion';
+import Accordion from "./accordion";
 
 const styles = {
   card: {
@@ -29,17 +29,6 @@ function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
-
 class SimpleCard extends React.Component {
   constructor(props) {
     super(props);
@@ -49,27 +38,25 @@ class SimpleCard extends React.Component {
     };
   }
 
-  toggleFavorite(event){
-    if(this.state.clicked === false){
-      event.target.style.fill = "red";
-      this.setState({clicked: true})
-    } else if(this.state.clicked === true){
-      event.target.style.fill = "gray";
-      this.setState({clicked: false})
+  toggleFavorite() {
+    if (this.state.clicked === false) {
+      this.setState({ clicked: true });
+    } else if (this.state.clicked === true) {
+      this.setState({ clicked: false });
     }
   }
-
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
 
   handleClick = id => {
     this.props.detailsView(this.props.item);
   };
+  componentDidMount() {
+    if (this.props.type === "favorite") {
+      this.toggleFavorite();
+    }
+    // <button onClick={() => this.props.setItemDetails(this.props.item)}>
+    // More Info{" "}
+    // </button>
+  }
 
   render() {
     const { classes } = this.props;
@@ -87,42 +74,23 @@ class SimpleCard extends React.Component {
             {this.props.name}
           </Typography>
           <Typography component="p">{this.props.description}</Typography>
-        </CardContent>
-        <CardActions>
-          <Modal
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            open={this.state.open}
-            onClose={this.handleClose}
-            onButtonClick={this.handleClick}
+          <FavoriteIcon
             id={this.props.id}
-          >
-            <div style={getModalStyle()} className={classes.paper}>
-              <CardContent>
-                <img
-                  src={classes.bgImage}
-                  alt="image here"
-                  style={{ width: "290px", height: "164px" }}
-                />
-                <Typography variant="headline" component="h2">
-                  {this.props.name}
-                </Typography>
-                <Typography component="p">{this.props.description}</Typography>
-              </CardContent>
-            </div>
-          </Modal>
-          <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton
-              aria-label="Add to favorites"
-              style={{ margin: "0 0 0 100px " }}
-            >
-              <FavoriteIcon id={this.props.id} onClick={(event)=>{
-                this.toggleFavorite(event)
-                this.props.favoriteClick(event, this.props.item)}} style={this.props.color} />
-            </IconButton>
-            </CardActions>
-          </CardActions>
-        <Accordion className={classes.root} />
+            onClick={event => {
+              this.toggleFavorite(event);
+              this.props.favoriteClick(event, this.props.item);
+            }}
+            style={this.state.clicked ? { fill: "red" } : { fill: "grey" }}
+          />
+        </CardContent>
+
+        <Accordion
+          className={classes.root}
+          item={this.props.item}
+          comments={this.props.comments}
+          sendComment={this.props.sendComment}
+          deleteComment={this.props.deleteComment}
+        />
       </div>
     );
   }

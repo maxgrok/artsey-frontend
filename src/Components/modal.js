@@ -35,17 +35,19 @@ const styles = theme => ({
 });
 
 class SimpleModal extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      open: false
-    }
+      open: false,
+      details: {}
+    };
   }
 
   handleOpen = () => {
-    console.log(this.props)
+    console.log(this.props);
     // this.props.onButtonClick(props.id);
     this.setState({ open: true });
+    this.setState({ details: this.props.modal(this.props.item) });
   };
 
   handleClose = () => {
@@ -66,14 +68,22 @@ class SimpleModal extends React.Component {
           /*onButtonClick={this.props.onButtonClick}*/
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <CardContent>
-          <img alt="imagehere" src={this.props.bgImage} style={{width: "290px", height:"164px"}}/>
-          
-            <Typography variant="headline" component="h2">
-              {this.props.name}
-            </Typography>
-            <Typography component="p">{this.props.description}</Typography>
-          </CardContent>
+            <CardContent>
+              <img
+                alt="imagehere"
+                src={
+                  this.state.details._links
+                    ? this.state.details._links.thumbnail.href
+                    : ""
+                }
+                style={{ width: "290px", height: "164px" }}
+              />
+
+              <Typography variant="headline" component="h2">
+                {this.props.name}
+              </Typography>
+              <Typography component="p">{this.props.description}</Typography>
+            </CardContent>
           </div>
         </Modal>
       </div>

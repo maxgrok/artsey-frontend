@@ -35,7 +35,12 @@ export default class ArtistList extends React.Component {
                         description={artist.hometown}
                         type="artist"
                         detailsView={this.modal}
-                        favoriteClick={this.props.favoriteClick}
+                        favoriteClick={() => this.props.favoriteClick(artist)}
+                        item={artist}
+                        comments={this.props.comments}
+                        sendComment={this.props.sendComment}
+                        deleteComment={this.props.deleteComment}
+                        modal={this.props.modal}
                       />
                     </Paper>
                   </Grid>

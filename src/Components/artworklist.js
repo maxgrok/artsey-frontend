@@ -35,7 +35,12 @@ export default class ArtworkList extends React.Component {
                         detailsView={this.modal}
                         id={artwork._links.self.href}
                         type="artwork"
-                        favoriteClick={this.props.favoriteClick}
+                        favoriteClick={() => this.props.favoriteClick(artwork)}
+                        item={artwork}
+                        comments={this.props.comments}
+                        modal={this.props.modal}
+                        sendComment={this.props.sendComment}
+                        deleteComment={this.props.deleteComment}
                       />
                     </Paper>
                   </Grid>

@@ -38,8 +38,12 @@ export default class GeneList extends React.Component {
                         detailsView={this.modal}
                         id={gene._links.self.href}
                         type="gene"
-                        favoriteClick={()=>this.props.favoriteClick(gene)}
+                        favoriteClick={() => this.props.favoriteClick(gene)}
                         item={gene}
+                        comments={this.props.comments}
+                        sendComment={this.props.sendComment}
+                        modal={this.props.modal}
+                        deleteComment={this.props.deleteComment}
                       />
                     </Paper>
                   </Grid>
